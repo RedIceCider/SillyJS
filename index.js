@@ -6,7 +6,7 @@ import { SlashCommandParser } from "../../../slash-commands/SlashCommandParser.j
 
 SlashCommandParser.addCommandObject(SlashCommand.fromProps({
     name: "evaljs",
-    returns: "string, void",
+    returns: "result of eval",
     /**
      * @param {(string|SlashCommandClosure)[]} value
      */
@@ -19,9 +19,11 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
                 result = eval(`${value}`);
             }
 
-            // Convert result to string if it's not undefined or null
-            if (result !== undefined && result !== null) {
-                return JSON.stringify(result);
+            // Check result type and convert accordingly
+            if (typeof result === 'string') {
+                return result; // Directly return string results
+            } else if (result !== undefined && result !== null) {
+                return JSON.stringify(result); // Stringify non-string results
             }
             return result;
         } catch (e) {
@@ -45,11 +47,11 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
             <ul>
                 <li>
                     <pre><code class="language-stscript">/evaljs {: alert("Hello, World!"); :}</code></pre>
-                    creates an alert "Hello, World!"
+                    Creates an alert "Hello, World!"
                 </li>
                 <li>
-                    <pre><code class="language-stscript">/evaljs "alert('Hello, World!');" console.log('Execution done.')</code></pre>
-                    creates an alert "Hello, World!" and logs "Execution done."
+                    <pre><code class="language-stscript">/evaljs {: let text = "Hello, World!"; text.replace(/World/, "Universe"); :} | /echo</code></pre>
+                    Eval returns <code>Hello, Univeirse!</code> and pipes it to /echo.
                 </li>
             </ul>
         </div>
