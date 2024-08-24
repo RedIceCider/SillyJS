@@ -1,0 +1,12 @@
+{
+    "display_name": "SillyJS",
+    "loading_order": 100,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "",
+    "author": "RedIceCider",
+    "version": "1.0.0",
+    "homePage": "https://github.com/RedIceCider/SillyJS",
+    "auto_update": false
+}
